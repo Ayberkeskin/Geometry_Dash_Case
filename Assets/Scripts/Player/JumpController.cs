@@ -18,6 +18,8 @@ namespace GeometryDash.Player
         [SerializeField] private LayerMask _groundLayer;
         [SerializeField] private Transform _groundCheck;
 
+        [SerializeField] private bool _isJump;
+
         [Header("GravitySettings")]
         [SerializeField] private float _fallSpeed;
 
@@ -33,7 +35,8 @@ namespace GeometryDash.Player
 
         private void FixedUpdate()
         {
-            Jump();   
+            Debug.Log(_isJump);
+            Jump();
         }
 
         private bool HasInput() 
@@ -43,10 +46,14 @@ namespace GeometryDash.Player
 
         private void Jump()
         {
-            if (HasInput() && Isgrounded())
+            if (HasInput() && IsGrounded())
             {
+                _isJump = true;
                 _rb.velocity = new Vector2(_rb.velocity.x,_jumpForce);
             }
+            else
+                _isJump = false;
+
             Gravity();
         }
 
@@ -58,9 +65,15 @@ namespace GeometryDash.Player
             }
         }
 
-        private bool Isgrounded()
+        private bool IsGrounded()
         {
             return Physics2D.OverlapCapsule(_groundCheck.position, new Vector2(1f,0.13f), CapsuleDirection2D.Horizontal, 0, _groundLayer);
         }
+
+        public bool IsJumping()
+        {
+            return _isJump;
+        }
+
     }
 }
