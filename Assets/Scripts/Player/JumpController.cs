@@ -2,16 +2,16 @@ using GeometryDash.Inputs;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace GeometryDash.Player
 {
     public class JumpController : MonoBehaviour
     {
-        
+
         [Header("Components")]
         Rigidbody2D _rb;
         InputManager _input;
-
 
         [Header("JumpSettings")]
         [SerializeField] private float _jumpForce;
@@ -30,18 +30,17 @@ namespace GeometryDash.Player
             _rb = GetComponent<Rigidbody2D>();
             _input = new InputManager();
 
-            _vecGravity = new Vector2(0,-Physics2D.gravity.y);
+            _vecGravity = new Vector2(0, -Physics2D.gravity.y);
         }
 
         private void FixedUpdate()
         {
-            Debug.Log(_isJump);
             Jump();
         }
 
-        private bool HasInput() 
+        private bool HasInput()
         {
-            return _input.IsJump?true:false;
+            return _input.IsJump ? true : false;
         }
 
         private void Jump()
@@ -49,7 +48,7 @@ namespace GeometryDash.Player
             if (HasInput() && IsGrounded())
             {
                 _isJump = true;
-                _rb.velocity = new Vector2(_rb.velocity.x,_jumpForce);
+                _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
             }
             else
                 _isJump = false;
@@ -59,15 +58,15 @@ namespace GeometryDash.Player
 
         private void Gravity()
         {
-            if (_rb.velocity.y<0)
+            if (_rb.velocity.y < 0)
             {
-                _rb.velocity -= _vecGravity* _fallSpeed*Time.deltaTime;
+                _rb.velocity -= _vecGravity * _fallSpeed * Time.deltaTime;
             }
         }
 
-        private bool IsGrounded()
+        public bool IsGrounded()
         {
-            return Physics2D.OverlapCapsule(_groundCheck.position, new Vector2(1f,0.13f), CapsuleDirection2D.Horizontal, 0, _groundLayer);
+            return Physics2D.OverlapCapsule(_groundCheck.position, new Vector2(1f, 0.13f), CapsuleDirection2D.Horizontal, 0, _groundLayer);
         }
 
         public bool IsJumping()

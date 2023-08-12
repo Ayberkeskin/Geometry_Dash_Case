@@ -9,16 +9,23 @@ namespace GeometryDash.Player
     {
         [SerializeField] private Transform _target;
         [SerializeField] private JumpController _jumpController;
-   
+
+        bool deno;
+
         private void FixedUpdate()
         {
-            Rotate();
+            Rotate();            
         }
         private void Rotate()
         {
             if (_jumpController.IsJumping())
             {
-                _target.transform.DORotate(_target.rotation.eulerAngles - new Vector3(0, 0, 180), 0.5f);
+                deno = false;
+                _target.transform.DORotate(_target.rotation.eulerAngles - new Vector3(0, 0, 180), 0.65f).OnComplete(() => deno = true);
+            }
+            if (deno && !_jumpController.IsGrounded())
+            {
+                 _target.transform.DORotate(_target.rotation.eulerAngles - new Vector3(0, 0, 90), 0.4f);
             }
         }
     }
