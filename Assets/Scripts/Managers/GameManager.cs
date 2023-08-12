@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        CurrentGameMode = GameMode.Fly;
+        CurrentGameMode = GameMode.Ground;
     }
 
     public void ChangeMode()
