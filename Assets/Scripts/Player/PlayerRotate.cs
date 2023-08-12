@@ -1,7 +1,5 @@
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
 
 namespace GeometryDash.Player
 {
@@ -10,23 +8,39 @@ namespace GeometryDash.Player
         [SerializeField] private Transform _target;
         [SerializeField] private JumpController _jumpController;
 
-        bool deno;
+        private bool canRotate = true;
 
-        private void FixedUpdate()
+        private void Update()
         {
-            Rotate();            
+            Rotate();
         }
+
         private void Rotate()
         {
-            if (_jumpController.IsJumping())
+            if (canRotate)
             {
-                deno = false;
-                _target.transform.DORotate(_target.rotation.eulerAngles - new Vector3(0, 0, 180), 0.65f).OnComplete(() => deno = true);
-            }
-            if (deno && !_jumpController.IsGrounded())
-            {
-                 _target.transform.DORotate(_target.rotation.eulerAngles - new Vector3(0, 0, 90), 0.4f);
+                if (_jumpController.IsJumping())
+                {
+                    canRotate = false;
+
+                    _target.DORotate(new Vector3(0, 0, _target.eulerAngles.z - 180f), 0.65f).OnComplete(() =>
+                    {
+                        canRotate = true;
+                    });
+                }
+                else if (!_jumpController.IsGrounded())
+                {
+                    canRotate = false;
+
+                    _target.DORotate(new Vector3(0, 0, _target.eulerAngles.z - 90f), 0.4f).OnComplete(() =>
+                    {
+                        canRotate = true;
+                    });
+                }
             }
         }
     }
 }
+
+
+
