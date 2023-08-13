@@ -6,7 +6,7 @@ namespace GeometryDash.Player
     public class FlyController : MonoBehaviour
     {
         Rigidbody2D _rb;
-        [SerializeField] private float upwardForce=10f;
+        [SerializeField] private float upwardForce=4f;
         [SerializeField] private Transform _planeBody;
 
         private void Awake()
@@ -28,18 +28,22 @@ namespace GeometryDash.Player
         }
         private void PlaneRotation()
         {
-            if (_rb.velocity.y>0) 
+            if (_planeBody!=null)
             {
-                _planeBody.DORotate(new Vector3(0, 0, 25), 0.45f);
+                if (_rb.velocity.y > 0)
+                {
+                    _planeBody.DORotate(new Vector3(0, 0, 25), 0.45f);
+                }
+                else if (_rb.velocity.y < 0)
+                {
+                    _planeBody.DORotate(new Vector3(0, 0, -25), 0.45f);
+                }
+                else if (_rb.velocity.y == 0)
+                {
+                    _planeBody.DORotate(new Vector3(0, 0, 0), 0.45f);
+                }
             }
-            else if (_rb.velocity.y < 0)
-            {
-                _planeBody.DORotate(new Vector3(0, 0, -25), 0.45f);
-            }
-            else if (_rb.velocity.y == 0)
-            {
-                _planeBody.DORotate(new Vector3(0, 0, 0), 0.45f);
-            }
+          
         }
     }
 

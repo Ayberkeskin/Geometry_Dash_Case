@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - ChangeMode
+  - RedZone
+  - Ground
   layers:
   - Default
   - TransparentFX

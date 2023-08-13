@@ -32,7 +32,7 @@ namespace GeometryDash.Player
                 {
                     canRotate = false;
 
-                    _target.DORotate(new Vector3(0, 0, _target.eulerAngles.z - 90f), 0.4f).OnComplete(() =>
+                    _target.DORotate(new Vector3(0, 0, _target.eulerAngles.z - 90f), 0.3f).OnComplete(() =>
                     {
                         canRotate = true;
                     });

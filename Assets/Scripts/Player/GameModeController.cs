@@ -6,7 +6,8 @@ namespace GeometryDash.Player
 {
     public class GameModeController : MonoBehaviour
     {
-        [SerializeField] private GameManager _gm;
+        [SerializeField] GameManager _gm;
+        DeathController _deathController;
         Rigidbody2D _rb;
 
         [Header("GroundModeComponent")]
@@ -24,6 +25,7 @@ namespace GeometryDash.Player
             _jumpController =GetComponent<JumpController>();
             _playerRotate=GetComponent<PlayerRotate>();
             _flyController=GetComponent<FlyController>();
+            _deathController=GetComponent<DeathController>();
         }
 
         private void Update()
@@ -33,7 +35,7 @@ namespace GeometryDash.Player
 
         private void ModeController()
         {
-            if (_gm.GetCurrentGameMode==GameMode.Ground)
+            if (_gm.GetCurrentGameMode==GameMode.Ground&&!_deathController.PlayerDeath)
             {
                 _rb.gravityScale = 5f;
                 _jumpController.enabled=true;
@@ -43,7 +45,7 @@ namespace GeometryDash.Player
                 _flyBody.SetActive(false);
                 
             }
-            else if (_gm.GetCurrentGameMode == GameMode.Fly)
+            else if (_gm.GetCurrentGameMode == GameMode.Fly&&!_deathController.PlayerDeath)
             {
                 _rb.gravityScale = 3.5f;
                 _flyController.enabled = true;
@@ -59,6 +61,7 @@ namespace GeometryDash.Player
             {
                 Debug.Log("sa");
                 _gm.ChangeMode();
+                collision.gameObject.SetActive(false);
             }
         }
     }
