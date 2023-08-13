@@ -9,6 +9,7 @@ namespace GeometryDash.Player
         [SerializeField] GameManager _gm;
         [SerializeField] Transform _player;
         [SerializeField] GameObject _finishScreen;
+        [SerializeField] AudioSource _audio;
 
         [Header("Particles")]
         [SerializeField] private GameObject _tailParticle;
@@ -25,6 +26,7 @@ namespace GeometryDash.Player
         private void Awake()
         {
             _playerDeath = false;
+            _audio.enabled = true;
             Time.timeScale = 1;
         }
         private void OnCollisionStay2D(Collision2D collision)
@@ -61,7 +63,7 @@ namespace GeometryDash.Player
         }
 
         private IEnumerator Death()
-        {
+        {           
             _playerDeath = true;
             if (_gm.GetCurrentGameMode==GameMode.Ground)
                 _cubeBody.SetActive(false);
@@ -78,6 +80,7 @@ namespace GeometryDash.Player
         {
             _finishScreen.SetActive(true);
             _playerDeath = true;
+            _audio.enabled = false;
             if (_gm.GetCurrentGameMode == GameMode.Ground)
                 _cubeBody.SetActive(false);
             else if (_gm.GetCurrentGameMode == GameMode.Fly)

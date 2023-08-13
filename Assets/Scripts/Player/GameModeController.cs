@@ -7,6 +7,7 @@ namespace GeometryDash.Player
     public class GameModeController : MonoBehaviour
     {
         [SerializeField] GameManager _gm;
+        [SerializeField] GameObject _explosionParticle;
         DeathController _deathController;
         Rigidbody2D _rb;
 
@@ -59,10 +60,17 @@ namespace GeometryDash.Player
         {
             if (collision.gameObject.CompareTag("ChangeMode"))
             {
-                Debug.Log("sa");
+                StartCoroutine(Effect());
                 _gm.ChangeMode();
                 collision.gameObject.SetActive(false);
             }
+        }
+
+        IEnumerator Effect()
+        {
+            _explosionParticle.SetActive(true);
+            yield return new WaitForSeconds(.2f);
+            _explosionParticle.SetActive(false);
         }
     }
 
