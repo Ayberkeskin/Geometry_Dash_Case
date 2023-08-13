@@ -38,6 +38,7 @@ namespace GeometryDash.Player
             }
             if (collision.gameObject.CompareTag("Finish"))
             {
+                Destroy(collision.gameObject);
                 StartCoroutine(FinishTime());
             }
         }

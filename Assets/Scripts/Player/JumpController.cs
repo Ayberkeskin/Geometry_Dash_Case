@@ -66,7 +66,7 @@ namespace GeometryDash.Player
 
         public bool IsGrounded()
         {
-            return Physics2D.OverlapCapsule(_groundCheck.position, new Vector2(1f, 0.13f), CapsuleDirection2D.Horizontal, 0, _groundLayer);
+            return Physics2D.OverlapCapsule(_groundCheck.position, new Vector2(1f, 0.15f), CapsuleDirection2D.Horizontal, 0, _groundLayer);
         }
 
         public bool IsJumping()
