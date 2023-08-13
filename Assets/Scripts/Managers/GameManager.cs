@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     {
         CurrentGameMode = GameMode.Ground;
     }
-
+    //Change game mode
     public void ChangeMode()
     {
         if (CurrentGameMode == GameMode.Ground)

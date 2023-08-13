@@ -1,6 +1,3 @@
-using GeometryDash.Inputs;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GeometryDash.Player
@@ -22,6 +19,7 @@ namespace GeometryDash.Player
             PlayerMove();
         }
 
+        //continuously moving to the right
         private void PlayerMove()
         {
             transform.Translate(Vector2.right*_speed*Time.deltaTime);

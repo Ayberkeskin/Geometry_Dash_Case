@@ -34,6 +34,7 @@ namespace GeometryDash.Player
             ModeController();
         }
 
+        //checks the current mode and takes action
         private void ModeController()
         {
             if (_gm.GetCurrentGameMode==GameMode.Ground&&!_deathController.PlayerDeath)
@@ -56,6 +57,7 @@ namespace GeometryDash.Player
                 _groundBody.SetActive(false);
             }
         }
+        //if it touches the portal, it changes the mode
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.CompareTag("ChangeMode"))

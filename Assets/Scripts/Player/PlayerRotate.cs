@@ -15,8 +15,10 @@ namespace GeometryDash.Player
             Rotate();
         }
 
+
         private void Rotate()
         {
+            //on the ground, ready to jump and spin
             if (_jumpController.IsGrounded())
                 _canRotate = true;
             
@@ -28,6 +30,7 @@ namespace GeometryDash.Player
 
                     _target.DORotate(new Vector3(0, 0, _target.eulerAngles.z - 180f), 0.45f).OnComplete(() =>
                     {
+                        //If it is still in the air after the rotate is finished, the process is repeated, so check if it is on the ground.
                         if (_jumpController.IsGrounded())
                             _canRotate = true;
                     });
@@ -38,6 +41,7 @@ namespace GeometryDash.Player
 
                     _target.DORotate(new Vector3(0, 0, _target.eulerAngles.z - 90f), 0.23f).OnComplete(() =>
                     {
+                        //If it is still in the air after the rotate is finished, the process is repeated, so check if it is on the ground.
                         if (_jumpController.IsGrounded())
                             _canRotate = true;
                     });

@@ -29,6 +29,7 @@ namespace GeometryDash.Player
             _audio.enabled = true;
             Time.timeScale = 1;
         }
+        //Sometimes the object is constantly touching the edge of the platform and therefore does not die that's why we have this code
         private void OnCollisionStay2D(Collision2D collision)
         {
             if (collision.gameObject.CompareTag("RedZone"))
@@ -62,9 +63,11 @@ namespace GeometryDash.Player
             }
         }
 
+        // unlock Death effects
         private IEnumerator Death()
         {           
             _playerDeath = true;
+
             if (_gm.GetCurrentGameMode==GameMode.Ground)
                 _cubeBody.SetActive(false);
             else if(_gm.GetCurrentGameMode == GameMode.Fly)
@@ -72,15 +75,18 @@ namespace GeometryDash.Player
             
             _tailParticle.SetActive(false);
             _explosionParticle.SetActive(true);
+
             yield return new WaitForSeconds(0.2f);
             _explosionParticle.SetActive(false);
             GameOver();
         }
+
         private IEnumerator FinishTime()
         {
             _finishScreen.SetActive(true);
             _playerDeath = true;
             _audio.enabled = false;
+
             if (_gm.GetCurrentGameMode == GameMode.Ground)
                 _cubeBody.SetActive(false);
             else if (_gm.GetCurrentGameMode == GameMode.Fly)
@@ -88,6 +94,7 @@ namespace GeometryDash.Player
 
             _tailParticle.SetActive(false);
             _explosionParticle.SetActive(true);
+
             yield return new WaitForSeconds(0.2f);
             _explosionParticle.SetActive(false);
             Finish();

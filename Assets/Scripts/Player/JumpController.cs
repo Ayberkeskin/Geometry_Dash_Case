@@ -38,9 +38,14 @@ namespace GeometryDash.Player
             Jump();
         }
 
-        private bool HasInput()
+        public bool IsGrounded()
         {
-            return _input.IsJump ? true : false;
+            return Physics2D.OverlapCapsule(_groundCheck.position, new Vector2(1f, 0.15f), CapsuleDirection2D.Horizontal, 0, _groundLayer);
+        }
+
+        public bool IsJumping()
+        {
+            return _isJump;
         }
 
         private void Jump()
@@ -55,7 +60,7 @@ namespace GeometryDash.Player
 
             Gravity();
         }
-
+        //makes it fall to the ground faster
         private void Gravity()
         {
             if (_rb.velocity.y < 0)
@@ -63,16 +68,12 @@ namespace GeometryDash.Player
                 _rb.velocity -= _vecGravity * _fallSpeed * Time.deltaTime;
             }
         }
-
-        public bool IsGrounded()
+        private bool HasInput()
         {
-            return Physics2D.OverlapCapsule(_groundCheck.position, new Vector2(1f, 0.15f), CapsuleDirection2D.Horizontal, 0, _groundLayer);
+            return _input.IsJump ? true : false;
         }
 
-        public bool IsJumping()
-        {
-            return _isJump;
-        }
+
 
     }
 }
