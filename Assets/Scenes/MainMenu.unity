@@ -1128,8 +1128,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 442655586}
-        m_TargetAssemblyTypeName: "GeometryDash.U\u0131.U\u0131Controller, Assembly-CSharp"
-        m_MethodName: PlayeGame
+        m_TargetAssemblyTypeName: "U\u0131Controller, Assembly-CSharp"
+        m_MethodName: PlayGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

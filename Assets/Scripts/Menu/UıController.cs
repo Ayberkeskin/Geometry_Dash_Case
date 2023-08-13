@@ -11,15 +11,51 @@ public class UıController : MonoBehaviour
 
     public static bool MusicOn;
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        UpdateMusicState();
+    }
+
     private void Start()
     {
-        MusicOn = true;
+        if (!PlayerPrefs.HasKey("Music"))
+            PlayerPrefs.SetInt("Music", 1);
+
+        MusicOn = PlayerPrefs.GetInt("Music") == 1;
+        UpdateMusicState();
     }
-    private void Update()
+
+    private void UpdateMusicState()
+    {
+        if (MusicOn)
+        {
+            _offBut.gameObject.SetActive(true);
+            _onBut.gameObject.SetActive(false);
+        }
+        else
+        {
+            _offBut.gameObject.SetActive(false);
+            _onBut.gameObject.SetActive(true);
+        }
+    }
+
+    private void FixedUpdate()
     {
         Debug.Log(MusicOn);
+        Debug.Log(PlayerPrefs.GetInt("Music"));
     }
-    public void PlayeGame()
+
+    public void PlayGame()
     {
         SceneManager.LoadScene(1);
     }
@@ -27,16 +63,15 @@ public class UıController : MonoBehaviour
     public void SoundOn()
     {
         MusicOn = true;
-        _offBut.gameObject.SetActive(true);
-        _onBut.gameObject.SetActive(false);
-
+        PlayerPrefs.SetInt("Music", 1);
+        UpdateMusicState();
     }
 
     public void SoundOff()
     {
         MusicOn = false;
-        _offBut.gameObject.SetActive(false);
-        _onBut.gameObject.SetActive(true);
+        PlayerPrefs.SetInt("Music", 0);
+        UpdateMusicState();
     }
 }
 

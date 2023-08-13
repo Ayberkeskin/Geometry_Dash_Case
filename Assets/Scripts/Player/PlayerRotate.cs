@@ -36,7 +36,7 @@ namespace GeometryDash.Player
                 {
                     _canRotate = false;
 
-                    _target.DORotate(new Vector3(0, 0, _target.eulerAngles.z - 90f), 0.3f).OnComplete(() =>
+                    _target.DORotate(new Vector3(0, 0, _target.eulerAngles.z - 90f), 0.23f).OnComplete(() =>
                     {
                         if (_jumpController.IsGrounded())
                             _canRotate = true;

@@ -47,7 +47,7 @@ namespace GeometryDash.Player
             }
             else if (_gm.GetCurrentGameMode == GameMode.Fly&&!_deathController.PlayerDeath)
             {
-                _rb.gravityScale = 3.5f;
+                _rb.gravityScale = 3f;
                 _flyController.enabled = true;
                 _jumpController.enabled = false;
                 _playerRotate.enabled = false;

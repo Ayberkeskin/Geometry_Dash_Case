@@ -8,6 +8,7 @@ namespace GeometryDash.Player
     {
         [SerializeField] GameManager _gm;
         [SerializeField] Transform _player;
+        [SerializeField] GameObject _finishScreen;
 
         [Header("Particles")]
         [SerializeField] private GameObject _tailParticle;
@@ -24,8 +25,24 @@ namespace GeometryDash.Player
         private void Awake()
         {
             _playerDeath = false;
+            Time.timeScale = 1;
         }
-
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("RedZone"))
+            {
+                StartCoroutine(Death());
+            }
+            if (collision.gameObject.CompareTag("Ground") && _player.localPosition.y <= collision.transform.localPosition.y)
+            {
+                StartCoroutine(Death());
+            }
+            if (collision.gameObject.CompareTag("Finish"))
+            {
+                Destroy(collision.gameObject);
+                StartCoroutine(FinishTime());
+            }
+        }
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.CompareTag("RedZone"))
@@ -59,6 +76,7 @@ namespace GeometryDash.Player
         }
         private IEnumerator FinishTime()
         {
+            _finishScreen.SetActive(true);
             _playerDeath = true;
             if (_gm.GetCurrentGameMode == GameMode.Ground)
                 _cubeBody.SetActive(false);
@@ -75,6 +93,7 @@ namespace GeometryDash.Player
         private void GameOver()
         {
             Time.timeScale = 1;
+            _finishScreen.SetActive(false);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         private void Finish()
